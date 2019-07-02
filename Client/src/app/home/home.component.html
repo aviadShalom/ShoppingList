@@ -1,3 +1,29 @@
-<p>
-  home works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Shopping List</h2>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-md-6">
+      <input type="button" class="btn btn-primary" value="Add New">
+    </div>
+  </div>
+  <br>
+  
+  <br>
+  <div class="row">
+    <div class="col-sm-4" *ngFor="let item of shoppingList">
+      <div class="card mb-4 bg-light">
+        <div class="card-header">
+          {{ item.name}}
+        </div>
+        <div class="card-body">
+          <p class="card-text"> {{item.created}} </p>
+          <input type="button" class="btn btn-primary" value="Select" (click)="itemSelected(item.id)">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

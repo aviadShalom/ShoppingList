@@ -20,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
     RouterModule.forRoot([
-      {path:'',component:HomeComponent}
+      {path:'',component:HomeComponent},
+      {path:'ShoppingList',component:ShoppingListComponent}
     ])
   ],
   providers: [],

@@ -9,6 +9,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
+  shoppingList:any;
+
   constructor(private homeSrv: homeService, private router: Router) { }
 
   ngOnInit() {
@@ -19,7 +21,12 @@ export class HomeComponent implements OnInit {
   LoadList(){
     console.log("Before");
     this.homeSrv.GetShoppingLists().subscribe(res => {
-      console.log(res);
+      this.shoppingList = res;
     })
+  }
+  itemSelected(itemID:any){
+    console.log(itemID);
+    let queryParams = "?itemID="+itemID
+    this.router.navigateByUrl("ShoppingList" + queryParams);
   }
 }

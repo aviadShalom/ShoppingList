@@ -1,0 +1,14 @@
+{
+  "shopping_list_demo": [
+    {"id":1, "name": "list 1", "created": "01/02/2019", "items":[]},
+    {"id":2, "name": "list 2", "created": "02/02/2019", "items":[]},
+    {"id":3, "name": "list 3", "created": "02/02/2019", "items":[]},
+    {"id":4, "name": "list 4", "created": "02/02/2019", "items":[]},
+    {"id":5, "name": "list 5", "created": "02/02/2019", "items":[]}
+  ],
+  "items":[
+    {"id": 1, "item_name":"Milk", "img_link": "milk.jpg"},
+    {"id": 2, "item_name":"Eggs", "img_link": ""},
+    {"id": 3, "item_name":"Tomato", "img_link": ""}
+  ]
+}
