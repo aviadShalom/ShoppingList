@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   LoadList(){
     console.log("Before");
     this.homeSrv.GetShoppingLists().subscribe(res => {
+      console.log(res);
       this.shoppingList = res;
     })
   }

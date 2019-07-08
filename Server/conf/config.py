@@ -1,1 +1,1 @@
-DB_PATH = "db/data.json"
+DB_PATH = "DB/data.db"
