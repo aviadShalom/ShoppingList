@@ -35,7 +35,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   openModal(template: TemplateRef<any>) {
-    this.modalRef = this.modalService.show(template);
+    this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
 
 }
