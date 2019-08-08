@@ -29,8 +29,13 @@ export class ShoppingListComponent implements OnInit {
     })
 
     this.service.GetShoppingListItem(this.itemID).subscribe( res => {
-      console.log(res);
-      this.data = res;
+      if (res == "0"){
+
+      }
+      else{
+        this.data = res[0];  
+      }
+      
     })
   }
 
@@ -38,4 +43,9 @@ export class ShoppingListComponent implements OnInit {
     this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
 
+  UpdateShoppingListName(){
+    this.service.UpdateShoppingListName(this.data.id, this.data.name).subscribe( res => {
+      console.log(res);
+    })
+  }
 }

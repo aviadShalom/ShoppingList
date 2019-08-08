@@ -45,7 +45,7 @@ def get_shopping_list_item(item_id):
     try:
         item = db.get_shopping_list_item(item_id)
         if len(item) > 0:
-            return jsonify(item[0])
+            return jsonify(item)
         else:
             return "0"
     except Exception as e:
@@ -53,6 +53,41 @@ def get_shopping_list_item(item_id):
         return "-1"
 
 
+@app.route('/UpdateShoppingListName/<item_id>/<name>', methods=['POST'])
+def update_shopping_list_name(item_id, name):
+    try:
+        if db.update_shopping_list_name(item_id, name):
+            return "1"
+        else:
+            return "0"
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
+
+
+@app.route('/CreateNewShoppingList/<name>', methods=['POST'])
+def create_new_shopping_list(name):
+    try:
+        ret_val =  db.create_shopping_list(name)
+        return str(ret_val)
+
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
+
+
+@app.route('/DeleteShoppingList/<item_id>', methods=['POST'])
+def delete_shopping_list(item_id):
+    try:
+        ret_val = db.delete_shopping_list(item_id)
+        if ret_val:
+            return "1"
+        else:
+            return "0"
+
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
 
 
 if __name__ == "__main__":

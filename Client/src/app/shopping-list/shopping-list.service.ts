@@ -17,4 +17,8 @@ export class ShoppingListService {
     GetShoppingListItem(itemID){
         return this.httpSrv.post('GetShoppingListItem/'+ itemID);
     }
+
+    UpdateShoppingListName(itemID, name){
+        return this.httpSrv.post('UpdateShoppingListName/'+ itemID + "/" + name);
+    }
 }

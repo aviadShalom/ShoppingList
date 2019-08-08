@@ -1,6 +1,8 @@
 from tinydb import TinyDB, Query, where
 import logging
 import sqlite3
+from datetime import date
+
 import json
 
 logger = logging.getLogger("Log")
@@ -23,15 +25,32 @@ class DB:
             d[col[0]] = row[idx]
         return d
 
-    def execute(self, query):
+    def execute_with_id(self, query, sql_params=None):
         try:
             cur = self.__conn.cursor()
-            cur.execute(query)
+            if sql_params:
+                cur.execute(query, sql_params)
+            else:
+                cur.execute(query)
+            ret_val = cur.lastrowid
+            cur.close()
+            return ret_val
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to execute query {0}".format(query))
+
+    def execute(self, query, sql_params=None):
+        try:
+            cur = self.__conn.cursor()
+            if sql_params:
+                cur.execute(query, sql_params)
+            else:
+                cur.execute(query)
             cur.close()
             return True
         except Exception as e:
             logger.error(e.message)
-            return False
+            raise NameError("Failed to execute query {0}".format(query))
 
     def query(self, query, query_params=None):
         try:
@@ -162,3 +181,39 @@ class DB:
         except Exception as e:
             logger.error(e.message)
             raise NameError("Failed to get Data")
+
+    def update_shopping_list_name(self, item_id, name):
+        try:
+            sql = "update shopping_list set name = ? where id = ?"
+
+            return self.execute(sql,(name, item_id))
+
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to Update Name")
+
+    def create_shopping_list(self, name):
+        try:
+            sql="insert into shopping_list (name, created) values(?,?)"
+            current_date = date.today().strftime("%d/%m/%Y")
+            ret_val = self.execute_with_id(sql,(name, current_date))
+
+            return ret_val
+
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to create shopping list")
+
+    def delete_shopping_list(self, item_id):
+        try:
+            sql = "delete from shopping_list_items where list_id = ?"
+            ret_val = self.execute(sql, item_id)
+            if ret_val:
+                sql = "delete from shopping_list where id = ?"
+                return self.execute(sql, item_id)
+            else:
+                return False
+
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to delete Shopping List")

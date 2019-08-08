@@ -12,4 +12,12 @@ export class homeService {
     GetShoppingLists(){
         return this.httpSrv.post('GetShoppingList');
     }
+
+    CreateNewShoppingList(name){
+        return this.httpSrv.post('CreateNewShoppingList/'+ name);
+    }
+
+    DeleteShoppingList(itemID){
+        return this.httpSrv.post('DeleteShoppingList/'+ itemID);
+    }
 }
