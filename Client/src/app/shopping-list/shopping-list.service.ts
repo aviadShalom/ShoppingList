@@ -21,4 +21,16 @@ export class ShoppingListService {
     UpdateShoppingListName(itemID, name){
         return this.httpSrv.post('UpdateShoppingListName/'+ itemID + "/" + name);
     }
+
+    AddItemToList(listID,itemID, quantity){
+        return this.httpSrv.post('AddItemToList/'+ listID + "/"+ itemID + "/" + quantity);
+    }
+
+    GetShoppingListItems(listID){
+        return this.httpSrv.post('GetShoppingListItems/'+ listID);
+    }
+
+    DeleteItemFromList(listID, itemID){
+        return this.httpSrv.post("DeleteItemFromList/"+ listID + "/" + itemID)
+    }
 }

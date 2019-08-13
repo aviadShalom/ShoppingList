@@ -4,6 +4,7 @@ import { ShoppingListService } from './shopping-list.service'
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {  } from '@angular/core';
 
+
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
@@ -15,6 +16,7 @@ export class ShoppingListComponent implements OnInit {
   data:any = {id:0,name:"",created:""};
   modalRef: BsModalRef;
   items: any[];
+  shoppingItems: any[];
 
   constructor(private route:ActivatedRoute, private service:ShoppingListService, private modalService: BsModalService) { 
     this.items = Array(15).fill(0);
@@ -27,6 +29,7 @@ export class ShoppingListComponent implements OnInit {
       console.log(res);
       this.itemsList = res;
     })
+    this.LoadItemList();
 
     this.service.GetShoppingListItem(this.itemID).subscribe( res => {
       if (res == "0"){
@@ -39,6 +42,11 @@ export class ShoppingListComponent implements OnInit {
     })
   }
 
+  get RefreshList() {
+    return this.LoadItemList.bind(this);
+  }
+
+
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template,Object.assign({}, { class: 'gray modal-lg' }));
   }
@@ -48,4 +56,26 @@ export class ShoppingListComponent implements OnInit {
       console.log(res);
     })
   }
+
+  LoadItemList(){
+    this.service.GetShoppingListItems(this.itemID).subscribe( res => {
+      if (res == "-1" || res == "0"){
+        //TODO: error handler
+      }
+      else{
+        this.shoppingItems = res;
+      }
+
+    })
+  }
+
+  DeleteItemFromList(itemID){
+    this.service.DeleteItemFromList(this.itemID, itemID).subscribe( res => {
+      if (res == "1"){
+        this.LoadItemList();
+      }
+    })
+  }
+
+
 }

@@ -90,6 +90,47 @@ def delete_shopping_list(item_id):
         return "-1"
 
 
+@app.route('/AddItemToList/<list_id>/<item_id>/<quantity>', methods=['POST'])
+def add_item_to_list(list_id, item_id, quantity):
+    try:
+        print list_id
+        print item_id
+        print quantity
+        result = db.add_shopping_item_to_list(list_id, item_id, quantity)
+        if result:
+            return "1"
+        else:
+            return "0"
+
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
+
+
+@app.route('/GetShoppingListItems/<list_id>',  methods=['POST'])
+def get_shopping_list_items(list_id):
+    try:
+        result = db.get_shopping_list_items(list_id)
+
+        return jsonify(result)
+
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
+
+
+@app.route('/DeleteItemFromList/<list_id>/<item_id>', methods=['POST'])
+def delete_item_from_list(list_id, item_id):
+    try:
+        if db.delete_item_from_list(list_id, item_id):
+            return "1"
+        else:
+            return "0"
+
+    except Exception as e:
+        logger.error(e.message)
+        return "-1"
+
 if __name__ == "__main__":
     logger.info("App Start")
     app.run(port=5000)

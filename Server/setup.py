@@ -74,10 +74,19 @@ def insert_shopping_list_items(db, shopping_list):
 
 
 def test():
-    sql = "select name from shopping_list;"
+    # sql = "update shopping_items set img_link = 'tomato.jpg' where item_id = 3"
+    # db = DB(config.DB_PATH)
+    # data = 'eggs.jpg'
+    # db.execute(sql)
+    sql = "select id, list_id, quantity, created, item_name, img_link " \
+          "from shopping_list_items join shopping_items on shopping_list_items.item_id = shopping_items.item_id "
+
     db = DB(config.DB_PATH)
-    db.query(sql)
+    result = db.query(sql)
+
+    print result
 
 
 if __name__ == "__main__":
-    setup_process()
+    # setup_process()
+    test()

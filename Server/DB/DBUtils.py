@@ -32,6 +32,7 @@ class DB:
                 cur.execute(query, sql_params)
             else:
                 cur.execute(query)
+            self.__conn.commit()
             ret_val = cur.lastrowid
             cur.close()
             return ret_val
@@ -46,6 +47,7 @@ class DB:
                 cur.execute(query, sql_params)
             else:
                 cur.execute(query)
+            self.__conn.commit()
             cur.close()
             return True
         except Exception as e:
@@ -217,3 +219,39 @@ class DB:
         except Exception as e:
             logger.error(e.message)
             raise NameError("Failed to delete Shopping List")
+
+    def add_shopping_item_to_list(self,list_id, item_id, quantity):
+        try:
+            sql = "insert into shopping_list_items(list_id, item_id, quantity, created) " \
+                  " values (?,?,?,?)"
+            current_date = date.today().strftime("%d/%m/%Y")
+            ret_val = self.execute(sql, (list_id, item_id, quantity, current_date))
+
+            return ret_val
+
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to add item {0} to list {1}".format(item_id, list_id))
+
+    def get_shopping_list_items(self, list_id):
+        try:
+            sql = "select id, list_id, quantity, created, item_name, img_link " \
+                  "from shopping_list_items join shopping_items on shopping_list_items.item_id = " \
+                  " shopping_items.item_id where list_id = ?"
+
+            result = self.query(sql, list_id)
+
+            return result
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to get Shopping list items")
+
+    def delete_item_from_list(self, list_id, item_id):
+        try:
+            sql = "delete from shopping_list_items where list_id = ? and id = ?"
+            return self.execute(sql, (list_id, item_id))
+
+        except Exception as e:
+            logger.error(e.message)
+            raise NameError("Failed to Delete item from List")
+

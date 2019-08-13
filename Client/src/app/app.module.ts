@@ -9,13 +9,15 @@ import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
+import { ShoppingItemComponent } from './shopping-item/shopping-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    ShoppingListComponent
+    ShoppingListComponent,
+    ShoppingItemComponent
   ],
   imports: [
     BrowserModule,

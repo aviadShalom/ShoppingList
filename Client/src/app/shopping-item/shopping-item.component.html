@@ -1,0 +1,14 @@
+<div class="row top-buffer">
+    <div class="col-sm-2">
+      <img src="{{'assets/img/'+ data.img_link}}" alt="" style="width: 50px; height: 50px;">
+    </div>
+  <div class="col-sm-2">
+    {{data.item_name}}
+  </div>
+  <div class="col-sm-3">
+      <input type="number" [(ngModel)]="quantity" value="0" style="width: 100px">
+  </div>
+  <div class="col-sm-2">
+      <button type="button" class="btn btn-primary" (click)="AddItem(data.item_id)">Add</button>
+  </div>
+</div>

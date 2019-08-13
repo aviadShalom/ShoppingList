@@ -1,32 +1,55 @@
 <div class="container">
   <br>
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <input type="text" [(ngModel)]="data.name">
     </div>
-    <div class="col-sm-3">
+    <div class="col-sm-2">
       <span>Created On: {{data.created}}</span>
     </div>
     <div class="col-sm-2">
       <input type="button" value="Update Name" class="btn btn-primary" (click)="UpdateShoppingListName()">
-    </div>
+    </div>    
     <div class="col-sm-2">
-        <input type="button" value="Clear items" class="btn btn-primary">
-      </div>
+        <button type="button" class="btn btn-primary" (click)="openModal(template)">Add</button>
+    </div>
   </div>
-  <div class="row">
-    <br>    
-  </div>
+  
   <div class="row">
       <br>      
       <hr class="h-divider">    
   </div>
   <div class="row">
-      <div class="col-sm-2">
-          <button type="button" class="btn btn-primary" (click)="openModal(template)">Add</button>
+      
+  </div>
+  <div class="row">
+      <div class="col-sm-4" *ngFor="let item of shoppingItems">
+        <div class="card mb-3 bg-light">
+          <div class="card-header">
+            {{ item.item_name}}
+            <button type="button" class="close pull-right" aria-label="Close" (click)="DeleteItemFromList(item.id)">
+                <img src="assets/img/delete.png" alt="" style="width: 25px; height: 25px;">
+              </button>
+          </div>
+          <div class="card-body">
+            <img src="{{'assets/img/'+ item.img_link}}" alt="" style="width: 45px; height: 45px;">
+            <!-- <p class="card-text"> {{item.created}} </p> -->
+            <div class="input-group">
+                <input type="number" value="0" class="form-control" style="max-width: 100px;">
+                <span class="input-group-btn" style="margin-left: 10px">
+                    <input type="button" class="btn btn-primary" value="Update" (click)="itemSelected(item.id)">
+                </span>
+             </div>
+            <!-- <div>
+            <input type="number" value="0" style="width: 100px">
+            <input type="button" class="btn btn-primary" value="Select" (click)="itemSelected(item.id)">
+            </div> -->
+          </div>
+        </div>
       </div>
   </div>
 </div>
+
 <ng-template #template>
     <div class="modal-header">
       <h4 class="modal-title pull-left">Select Item from List</h4>
@@ -35,10 +58,13 @@
       </button>
     </div>
     <div class="modal-body">
-      <div class="row top-buffer" *ngFor="let item of itemsList">
-          <div class="col-sm-2">
-            <img src="{{'assets/img/'+ item.img_link}}" alt="" style="width: 50px; height: 50px;">
-          </div>
+      
+      
+      <div  *ngFor="let item of itemsList">
+        <app-shopping-item [data]="item" [list_id]="itemID" [refreshList]="RefreshList"></app-shopping-item>
+        <!-- <div class="col-sm-2">
+          <img src="{{'assets/img/'+ item.img_link}}" alt="" style="width: 50px; height: 50px;">
+        </div>
         <div class="col-sm-2">
           {{item.item_name}}
         </div>
@@ -47,7 +73,7 @@
         </div>
         <div class="col-sm-2">
             <button type="button" class="btn btn-primary">Add</button>
-        </div>
+        </div> -->
       </div>
     </div>
   </ng-template>
