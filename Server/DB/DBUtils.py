@@ -159,7 +159,8 @@ class DB:
 
             ret_val = self.query(query, None)
 
-            return ret_val
+            return DB.build_answer(ret_val, None)
+
         except Exception as e:
             logger.error(e.message)
             raise NameError("Failed to get Data")
@@ -168,7 +169,7 @@ class DB:
         try:
             sql = "select item_id, item_name, img_link from shopping_items;"
             result = self.query(sql)
-            return result
+            return DB.build_answer(result,None)
         except Exception as e:
             logger.error(e.message)
             raise NameError("Failed to get Data")
@@ -179,7 +180,7 @@ class DB:
 
             result = self.query(sql,item_id)
 
-            return result
+            return  DB.build_answer(result,None)
         except Exception as e:
             logger.error(e.message)
             raise NameError("Failed to get Data")
@@ -255,3 +256,20 @@ class DB:
             logger.error(e.message)
             raise NameError("Failed to Delete item from List")
 
+    @staticmethod
+    def build_answer(data, error_msg):
+        ret_val = {'Status': 0,
+                   'Error_Message': '',
+                   'Data': ''}
+
+        if error_msg is not None:
+            ret_val['Status'] = -1
+
+        else:
+            if data is None:
+                ret_val['Status'] = 0
+            else:
+                ret_val['Status'] = 1
+                ret_val['Data'] = data
+
+        return ret_val

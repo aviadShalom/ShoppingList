@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
   LoadList(){    
     this.homeSrv.GetShoppingLists().subscribe(res => {
       console.log(res);
-      this.shoppingList = res;
+      this.shoppingList = res.Data;
     })
   }
   itemSelected(itemID:any){    
